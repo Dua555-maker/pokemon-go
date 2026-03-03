@@ -54,8 +54,11 @@ def login():
     if user and bcrypt.check_password_hash(user.password, password):
       login_user(user)
       return redirect(url_for('users.index'))
-    else:
+    elif not user:
       flash('Username is not exists!', 'warning')
+      return redirect(url_for('users.login'))
+    else:
+      flash('Password is not correct!', 'warning')
       return redirect(url_for('users.login'))
     
   return render_template('users/login.html',
